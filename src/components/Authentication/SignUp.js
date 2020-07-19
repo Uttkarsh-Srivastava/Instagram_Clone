@@ -1,16 +1,19 @@
 import React, { useState } from "react";
+
 import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
+import TextField from "@material-ui/core/TextField";
+import { auth } from "../../firebase";
 
-export default function SignIn() {
+export default function SignUp() {
     const [open, setOpen] = useState(false);
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
+    const [username, setUsername] = useState();
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -20,6 +23,18 @@ export default function SignIn() {
         setOpen(false);
     };
 
+    const onSubmit = (e) => {
+        e.preventDefault();
+        auth.createUserWithEmailAndPassword(email, password)
+            .then((authUser) => {
+                authUser.user.updateProfile({
+                    displayName: username,
+                });
+            })
+            .catch((error) => alert(error.message));
+        handleClose();
+    };
+
     return (
         <div>
             <Button
@@ -27,8 +42,9 @@ export default function SignIn() {
                 color="primary"
                 onClick={handleClickOpen}
             >
-                Sign In
+                Sign Up
             </Button>
+
             <Dialog
                 open={open}
                 onClose={handleClose}
@@ -36,9 +52,16 @@ export default function SignIn() {
             >
                 <DialogTitle id="form-dialog-title">Sign In</DialogTitle>
                 <DialogContent>
-                    <DialogContentText>
-                        Please Sign In with your email and password
-                    </DialogContentText>
+                    <DialogContentText>Create your account !</DialogContentText>
+                    <TextField
+                        autoFocus
+                        margin="dense"
+                        id="name"
+                        label="Username"
+                        type="text"
+                        fullWidth
+                        onChange={(e) => setUsername(e.target.value)}
+                    />
                     <TextField
                         autoFocus
                         margin="dense"
@@ -62,8 +85,8 @@ export default function SignIn() {
                     <Button onClick={handleClose} color="primary">
                         Cancel
                     </Button>
-                    <Button onClick={handleClose} color="primary">
-                        Sign In
+                    <Button type="submit" onClick={onSubmit} color="primary">
+                        Sign Up
                     </Button>
                 </DialogActions>
             </Dialog>
