@@ -8,7 +8,7 @@ export default function Posts() {
     const [posts, setPosts] = useState([]);
 
     useEffect(() => {
-        db.collection("posts").onSnapshot((snapshot) => {
+        const unsubscribe = db.collection("posts").onSnapshot((snapshot) => {
             setPosts(
                 snapshot.docs.map((doc) => ({
                     id: doc.id,
@@ -16,6 +16,10 @@ export default function Posts() {
                 }))
             );
         });
+        return () => {
+            console.log(); 
+            unsubscribe();
+        };
     }, []);
     return (
         <div className="container">

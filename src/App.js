@@ -1,7 +1,7 @@
 import React from "react";
 import "./App.css";
-import Header from "./Components/Header/Header";
-import Posts from "./Components/Posts/Posts";
+import Header from "./components/Header/Header";
+import Posts from "./components/Posts/Posts";
 
 function App() {
     return (
