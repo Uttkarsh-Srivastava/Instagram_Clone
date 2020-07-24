@@ -2,9 +2,11 @@ import "./App.css";
 
 import React, { useEffect, useState } from "react";
 
+import Authenticate from "./components/Authentication/Authenticate";
 import Header from "./components/Header/Header";
-import Posts from "./components/Posts/Posts";
+// import ImageUpload from "./components/ImageUpload/ImageUpload";
 import { auth } from "./firebase";
+import Content from "./components/Content/Content";
 
 function App() {
     const [user, setUser] = useState(null);
@@ -22,12 +24,21 @@ function App() {
             unsubscribe();
         };
     }, [user]);
-    return (
-        <div className="App">
-            <Header user={user} />
-            <Posts className="posts" />
-        </div>
-    );
+    if (!user) {
+        return (
+            <div className="Login">
+                <Authenticate />
+            </div>
+        );
+    } else {
+        return (
+            <div className="App">
+                <Header user={user} />
+                {/* <ImageUpload /> */}
+                <Content />
+            </div>
+        );
+    }
 }
 
 export default App;

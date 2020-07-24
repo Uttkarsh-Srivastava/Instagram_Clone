@@ -1,8 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { db } from "../../firebase";
-import "./Posts.css";
-
+import { db } from "../../../firebase";
 import Post from "../Post/Post";
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles({
+    root: {
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+    },
+});
 
 export default function Posts() {
     const [posts, setPosts] = useState([]);
@@ -17,12 +24,15 @@ export default function Posts() {
             );
         });
         return () => {
-            console.log(); 
+            console.log();
             unsubscribe();
         };
     }, []);
+
+    const classes = useStyles();
+
     return (
-        <div className="container">
+        <div className={classes.root}>
             {posts.map(({ id, post }) => (
                 <Post
                     key={id}

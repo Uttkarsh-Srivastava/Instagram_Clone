@@ -3,3 +3,17 @@
     padding: 0;
     box-sizing: border-box;
 }
+
+.App {
+    background-color: #fafafa;
+    display: flex;
+    justify-content: center;
+}
+
+.Login {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #fafafafa;
+}
