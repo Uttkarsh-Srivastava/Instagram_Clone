@@ -1,17 +1,15 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import Posts from "./Posts/Posts";
+import Posts from "./Posts";
 import Grid from "@material-ui/core/Grid";
 
 const useStyles = makeStyles({
     root: {
-        position: "relative",
-        top: "64px",
+        paddingTop: "8vh",
+        paddingBottom: "8vh",
         display: "flex",
         justifyContent: "center",
-    },
-    posts: {
-        // border: "solid black 1px",
+        backgroundColor: "#ffffff ",
     },
 });
 
@@ -19,7 +17,7 @@ export default function Content() {
     const classes = useStyles();
     return (
         <Grid container className={classes.root}>
-            <Grid item xs={12} md={5} className={classes.posts}>
+            <Grid item xs={12} md={5} className={classes.item}>
                 <Posts />
             </Grid>
         </Grid>

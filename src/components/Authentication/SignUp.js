@@ -12,7 +12,7 @@ const useStyles = makeStyles({
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
-        height: "50vh",
+        height: "72vh",
     },
     textField: {
         width: "50%",
@@ -46,6 +46,7 @@ export default function SignUp() {
             .then((authUser) => {
                 authUser.user.updateProfile({
                     displayName: username,
+                    posts: 0,
                 });
             })
             .catch((error) => alert(error.message));

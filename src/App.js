@@ -4,12 +4,14 @@ import React, { useEffect, useState } from "react";
 
 import Authenticate from "./components/Authentication/Authenticate";
 import Header from "./components/Header/Header";
-// import ImageUpload from "./components/ImageUpload/ImageUpload";
-import { auth } from "./firebase";
 import Content from "./components/Content/Content";
+import Footer from "./components/Footer/Footer";
+import { auth } from "./firebase";
+import Loader from "./components/Loader/Loader";
 
 function App() {
     const [user, setUser] = useState(null);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged((authUser) => {
@@ -19,25 +21,31 @@ function App() {
             } else {
                 setUser(null);
             }
+            setLoading(false);
         });
         return () => {
             unsubscribe();
         };
     }, [user]);
-    if (!user) {
-        return (
-            <div className="Login">
-                <Authenticate />
-            </div>
-        );
+
+    if (loading) {
+        return <Loader />;
     } else {
-        return (
-            <div className="App">
-                <Header user={user} />
-                {/* <ImageUpload /> */}
-                <Content />
-            </div>
-        );
+        if (user) {
+            return (
+                <div className="App">
+                    <Header user={user} />
+                    <Content />
+                    <Footer user={user} />
+                </div>
+            );
+        } else {
+            return (
+                <div className="Login">
+                    <Authenticate />
+                </div>
+            );
+        }
     }
 }
 

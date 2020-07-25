@@ -47,6 +47,7 @@ const useStyles = makeStyles((theme) => ({
     root: {
         backgroundColor: theme.palette.background.paper,
         width: 500,
+        height: "100vh",
     },
 }));
 
@@ -73,18 +74,13 @@ export default function FullWidthTabs() {
                     <Tab label="Sign Up" {...a11yProps(1)} />
                 </Tabs>
             </AppBar>
-            {/* <SwipeableViews
-                axis={theme.direction === "rtl" ? "x-reverse" : "x"}
-                index={value}
-                onChangeIndex={handleChangeIndex}
-            > */}
+
             <TabPanel value={value} index={0} dir={theme.direction}>
                 <SignIn />
             </TabPanel>
             <TabPanel value={value} index={1} dir={theme.direction}>
                 <SignUp />
             </TabPanel>
-            {/* </SwipeableViews> */}
         </div>
     );
 }

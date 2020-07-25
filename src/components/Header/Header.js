@@ -3,11 +3,11 @@ import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 
-import SignOut from "../Authentication/SignOut";
-
+import Menu from "./Menu";
 const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
+        marginBottom: "24px",
     },
     menuButton: {
         marginRight: theme.spacing(2),
@@ -22,10 +22,10 @@ const useStyles = makeStyles((theme) => ({
     },
     logo: {
         objectFit: "contain",
-        paddingLeft: "60px",
+        paddingLeft: "auto",
     },
     signOutButton: {
-        paddingRight: "60px",
+        paddingRight: "auto",
     },
 }));
 
@@ -43,7 +43,7 @@ export default function Header({ user }) {
                         />
                     </div>
                     <div className={classes.signOutButton}>
-                        <SignOut user={user} />
+                        <Menu user={user} />
                     </div>
                 </Toolbar>
             </AppBar>
