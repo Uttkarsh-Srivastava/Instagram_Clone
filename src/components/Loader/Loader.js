@@ -15,7 +15,7 @@ function Loader() {
                 animationDuration: "1s",
             }}
         >
-            <InstagramIcon style={{ fontSize: 48 }} color="primary" />
+            <InstagramIcon style={{ fontSize: 72 }} color="primary" />
         </div>
     );
 }

@@ -9,7 +9,6 @@ import { Input } from "@material-ui/core";
 
 import { db } from "../../firebase";
 import firebase from "firebase";
-import CircularProgressWithLabel from "./CircularProgressWithLabel";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -36,7 +35,6 @@ function getSteps() {
 export default function InputUploadForm({ handleClose, user }) {
     const [image, setImage] = useState(null);
     const [caption, setCaption] = useState("");
-    const [progress, setProgress] = useState(0);
     const classes = useStyles();
     const [activeStep, setActiveStep] = React.useState(0);
     const steps = getSteps();
@@ -65,7 +63,7 @@ export default function InputUploadForm({ handleClose, user }) {
                     const progress = Math.round(
                         (snapshot.bytesTransferred / snapshot.totalBytes) * 100
                     );
-                    setProgress(progress);
+
                     if (progress === 100) {
                         handleClose();
                     }
@@ -89,7 +87,6 @@ export default function InputUploadForm({ handleClose, user }) {
                         });
 
                     setImage(null);
-                    setProgress(0);
                     setCaption("");
                 }
             );
@@ -151,7 +148,6 @@ export default function InputUploadForm({ handleClose, user }) {
                         >
                             Upload
                         </Button>
-                        <CircularProgressWithLabel value={progress} />
                     </center>
                 );
 

@@ -10,15 +10,22 @@ const useStyles = makeStyles({
         display: "flex",
         justifyContent: "center",
         backgroundColor: "#ffffff ",
+        zIndex: "1",
+    },
+    item: {
+        position: "relative",
+        borderRight: "solid lightgray 0.2px",
+        borderLeft: "solid lightgray 0.2px",
+        zIndex: "3",
     },
 });
 
-export default function Content() {
+export default function Content({ user }) {
     const classes = useStyles();
     return (
         <Grid container className={classes.root}>
             <Grid item xs={12} md={5} className={classes.item}>
-                <Posts />
+                <Posts user={user} />
             </Grid>
         </Grid>
     );

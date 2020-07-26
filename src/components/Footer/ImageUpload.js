@@ -5,6 +5,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Fab from "@material-ui/core/Fab";
 import AddIcon from "@material-ui/icons/Add";
+import "animate.css";
 
 import InputUploadForm from "./ImageUploadForm";
 
@@ -30,12 +31,20 @@ export default function FormDialog({ user }) {
                 <AddIcon />
             </Fab>
             <Dialog
+                style={{ animation: "zoomIn", animationDuration: "0.4s" }}
                 open={open}
                 onClose={handleClose}
                 aria-labelledby="form-dialog-title"
             >
                 <DialogTitle id="form-dialog-title">Upload a Photo</DialogTitle>
-                <DialogContent style={{ width: "350px", height: "270px" }}>
+                <DialogContent
+                    style={{
+                        width: "350px",
+                        height: "270px",
+                        // animation: "zoomIn",
+                        // animationDuration: "0.3s",
+                    }}
+                >
                     <InputUploadForm handleClose={handleClose} user={user} />
                 </DialogContent>
             </Dialog>
