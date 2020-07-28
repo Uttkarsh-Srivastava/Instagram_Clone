@@ -7,7 +7,7 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
 
-import { db } from "../../firebase";
+import { db } from "../../../firebase";
 import Comment from "./Comment";
 import moment from "moment";
 
@@ -31,7 +31,7 @@ export default function CommentDialog({ postId }) {
             .collection("posts")
             .doc(postId)
             .collection("comments")
-            .orderBy("timestamp", "desc")
+            .orderBy("timestamp", "asc")
             .onSnapshot((snapshot) => {
                 setComments(
                     snapshot.docs.map((doc) => {
@@ -63,9 +63,14 @@ export default function CommentDialog({ postId }) {
 
     return (
         <div>
-            <Button onClick={handleClickOpen("body")} style={{ padding: "0" }}>
-                View {comments.length} Comments
-            </Button>
+            {comments.length > 0 ? (
+                <Button
+                    onClick={handleClickOpen("body")}
+                    style={{ padding: "0" }}
+                >
+                    View {comments.length} Comments
+                </Button>
+            ) : null}
             <Dialog
                 fullScreen
                 open={open}
@@ -99,9 +104,11 @@ export default function CommentDialog({ postId }) {
                         ref={descriptionElementRef}
                         tabIndex={-1}
                     >
-                        {comments.map(({ id, comment, date }) => (
+                        {comments.forEach(({ id, comment, date }) => (
                             <Comment
                                 key={id}
+                                postId={postId}
+                                commentId={id}
                                 text={comment.text}
                                 username={comment.username}
                                 date={date}

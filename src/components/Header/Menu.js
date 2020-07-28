@@ -102,14 +102,8 @@ export default function Menu({ user }) {
                                         id="menu-list-grow"
                                         onKeyDown={handleListKeyDown}
                                     >
-                                        <MenuItem onClick={handleClose}>
-                                            Profile
-                                        </MenuItem>
-                                        <MenuItem onClick={handleClose}>
-                                            My account
-                                        </MenuItem>
                                         <MenuItem onClick={handleSignOut}>
-                                            Log Out{" "}
+                                            Log Out
                                         </MenuItem>
                                     </MenuList>
                                 </ClickAwayListener>

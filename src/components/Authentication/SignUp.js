@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
-import { auth } from "../../firebase";
+import { auth, db } from "../../firebase";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 
@@ -46,8 +46,10 @@ export default function SignUp() {
             .then((authUser) => {
                 authUser.user.updateProfile({
                     displayName: username,
-                    posts: 0,
                 });
+                db.collection("users")
+                    .doc(`${authUser.user.email}`)
+                    .set({ posts: [], likedPosts: [] });
             })
             .catch((error) => alert(error.message));
     };

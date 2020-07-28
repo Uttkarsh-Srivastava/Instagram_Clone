@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import React, { useState } from "react";
-import { Input, Button } from "@material-ui/core";
-import { db } from "../../firebase";
+import { TextField, Button } from "@material-ui/core";
+import { db } from "../../../firebase";
 import firebase from "firebase";
 
 function AddComment({ postId, user }) {
@@ -20,12 +20,11 @@ function AddComment({ postId, user }) {
     return (
         <div>
             <form style={{ display: "flex", justifyContent: "space-between" }}>
-                <Input
+                <TextField
                     autoFocus
                     margin="dense"
                     id="caption"
-                    label="Caption"
-                    type="text"
+                    autoComplete="off"
                     fullWidth
                     value={comment}
                     placeholder="Add a comment... "

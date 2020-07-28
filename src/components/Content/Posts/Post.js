@@ -1,19 +1,20 @@
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
 import CardContent from "@material-ui/core/CardContent";
 import Avatar from "@material-ui/core/Avatar";
-import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
-import FavoriteIcon from "@material-ui/icons/Favorite";
 
-import MoreVertIcon from "@material-ui/icons/MoreVert";
+import DeletePost from "./DeletePost";
+import AddComment from "../Comments/AddComment";
+import CommentDialog from "../Comments/CommentDialog";
+import AddLikes from "../Likes/Likes";
 
-import AddComment from "./AddComment";
-import CommentDialog from "./CommentDialog";
+import { db } from "../../../firebase";
+import "animate.css";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles({
     root: {
         paddingBottom: "56px",
         minHeight: "50vh",
@@ -21,15 +22,16 @@ const useStyles = makeStyles((theme) => ({
         maxWidth: "700px",
         width: "100%",
         animation: "zoomIn",
-        animationDuration: "0.5s",
+        animationDuration: "0.8s",
+        marginBottom: 36,
     },
-    media: {
-        // 16:9
-    },
+
     img: {
+        objectFit: "contain",
         width: "100%",
         height: "50vh",
-        objectFit: "contain",
+        animation: "zoomIn",
+        animationDuration: "0.8s",
     },
     content: {
         display: "flex",
@@ -53,7 +55,7 @@ const useStyles = makeStyles((theme) => ({
     viewComment: {
         marginBottom: "12px ",
     },
-}));
+});
 
 export default function Post({
     postId,
@@ -64,18 +66,34 @@ export default function Post({
     date,
 }) {
     const classes = useStyles();
+    const liked = useRef(false);
 
+    const [likes, setLikes] = useState(0);
+
+    useEffect(() => {
+        const unsubscribe = db
+            .collection("posts")
+            .doc(postId)
+            .collection("likes")
+            .onSnapshot((snapshot) => {
+                setLikes(snapshot.docs.length);
+                return null;
+            });
+        return () => {
+            unsubscribe();
+        };
+    }, []);
+
+    const handleDelete = () => {
+        db.collection("posts").doc(postId).delete();
+    };
     return (
         <Card className={classes.root}>
             <CardHeader
                 avatar={
                     <Avatar alt={username} src="#" className={classes.avatar} />
                 }
-                action={
-                    <IconButton aria-label="settings">
-                        <MoreVertIcon />
-                    </IconButton>
-                }
+                action={<DeletePost handleDelete={handleDelete} />}
                 title={username}
                 subheader={date}
             />
@@ -89,17 +107,17 @@ export default function Post({
 
             <CardContent className={classes.content}>
                 <div className={classes.likeButton}>
-                    <IconButton
-                        aria-label="add to favorites"
-                        style={{ padding: 0 }}
-                    >
-                        <FavoriteIcon />
-                    </IconButton>
+                    <AddLikes
+                        postId={postId}
+                        user={user}
+                        isLiked={liked.current}
+                        likes={likes}
+                    />
                 </div>
                 <div className={classes.caption}>
                     <strong>
                         <Typography
-                            variant="p"
+                            variant="body1"
                             color="textPrimary"
                             component="p"
                             style={{ marginRight: 8 }}
@@ -107,7 +125,11 @@ export default function Post({
                             {username}
                         </Typography>
                     </strong>
-                    <Typography variant="p" color="textSecondary" component="p">
+                    <Typography
+                        variant="body1"
+                        color="textSecondary"
+                        component="p"
+                    >
                         {caption}
                     </Typography>
                 </div>

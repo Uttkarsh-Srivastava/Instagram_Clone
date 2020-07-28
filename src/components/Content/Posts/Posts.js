@@ -1,5 +1,6 @@
+/* eslint-disable react/prop-types */
 import React, { useState, useEffect } from "react";
-import { db } from "../../firebase";
+import { db } from "../../../firebase";
 import Post from "./Post";
 import { makeStyles } from "@material-ui/core/styles";
 import moment from "moment";

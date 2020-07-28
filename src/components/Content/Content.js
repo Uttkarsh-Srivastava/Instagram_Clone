@@ -1,22 +1,18 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import Posts from "./Posts";
+import Posts from "./Posts/Posts";
 import Grid from "@material-ui/core/Grid";
 
 const useStyles = makeStyles({
     root: {
         paddingTop: "8vh",
-        paddingBottom: "8vh",
+        paddingBottom: "56px",
         display: "flex",
         justifyContent: "center",
         backgroundColor: "#ffffff ",
-        zIndex: "1",
     },
     item: {
-        position: "relative",
-        borderRight: "solid lightgray 0.2px",
-        borderLeft: "solid lightgray 0.2px",
-        zIndex: "3",
+        marginTop: 12,
     },
 });
 

@@ -7,8 +7,9 @@ import StepLabel from "@material-ui/core/StepLabel";
 import Button from "@material-ui/core/Button";
 import { Input } from "@material-ui/core";
 
-import { db } from "../../firebase";
-import firebase from "firebase";
+import { db } from "../../../firebase";
+import firebase from "firebase/app";
+import moment from "moment";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -34,6 +35,7 @@ function getSteps() {
 
 export default function InputUploadForm({ handleClose, user }) {
     const [image, setImage] = useState(null);
+
     const [caption, setCaption] = useState("");
     const classes = useStyles();
     const [activeStep, setActiveStep] = React.useState(0);
@@ -50,11 +52,11 @@ export default function InputUploadForm({ handleClose, user }) {
     };
 
     const handleUpload = () => {
+        var t = moment().format() + image.name;
         if (image !== null && caption !== "") {
-            user.updateProfile({ posts: user.posts + 1 });
             const uploadTask = firebase
                 .storage()
-                .ref(`images/${image.name}`)
+                .ref(`images/${t}/`)
                 .put(image);
 
             uploadTask.on(
@@ -74,8 +76,8 @@ export default function InputUploadForm({ handleClose, user }) {
                 () => {
                     firebase
                         .storage()
-                        .ref("images")
-                        .child(image.name)
+                        .ref(`images`)
+                        .child(`${t}`)
                         .getDownloadURL()
                         .then((url) => {
                             db.collection("posts").add({
@@ -138,6 +140,8 @@ export default function InputUploadForm({ handleClose, user }) {
                             placeholder="Add a Caption"
                             type="text"
                             fullWidth
+                            autoComplete="off"
+                            value={caption}
                             onChange={(e) => setCaption(e.target.value)}
                             className={classes.inputs}
                         />

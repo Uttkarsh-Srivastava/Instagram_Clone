@@ -14,9 +14,12 @@ function App() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
+        window.scroll(0, 0);
+    }, []);
+
+    useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged((authUser) => {
             if (authUser) {
-                console.log(authUser);
                 setUser(authUser);
             } else {
                 setUser(null);

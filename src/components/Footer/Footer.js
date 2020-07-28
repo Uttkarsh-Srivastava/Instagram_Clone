@@ -3,8 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Toolbar from "@material-ui/core/Toolbar";
-import Button from "@material-ui/core/Button";
-import ImageUpload from "./ImageUpload";
+import ImageUpload from "./AddImage/ImageUpload";
 const useStyles = makeStyles({
     appBar: {
         top: "auto",
@@ -26,9 +25,7 @@ export default function BottomAppBar({ user }) {
 
             <AppBar position="fixed" className={classes.appBar}>
                 <Toolbar className={classes.toolbar}>
-                    <Button>
-                        <ImageUpload user={user} />
-                    </Button>
+                    <ImageUpload user={user} />
                 </Toolbar>
             </AppBar>
         </React.Fragment>
