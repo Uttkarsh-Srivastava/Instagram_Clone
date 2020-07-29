@@ -13,6 +13,7 @@ function AddComment({ postId, user }) {
                 timestamp: firebase.firestore.FieldValue.serverTimestamp(),
                 text: comment,
                 username: user.displayName,
+                commentedBy: user.email,
             });
             setComment("");
         }

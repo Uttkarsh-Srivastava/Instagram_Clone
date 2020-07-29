@@ -50,6 +50,7 @@ export default function Posts({ user }) {
                     username={post.username}
                     imageUrl={post.imageUrl}
                     caption={post.caption}
+                    postedBy={post.postedBy}
                     user={user}
                     date={date}
                 />

@@ -62,6 +62,7 @@ export default function Post({
     username,
     imageUrl,
     caption,
+    postedBy,
     user,
     date,
 }) {
@@ -82,7 +83,7 @@ export default function Post({
         return () => {
             unsubscribe();
         };
-    }, []);
+    }, [postId]);
 
     const handleDelete = () => {
         db.collection("posts").doc(postId).delete();
@@ -93,7 +94,12 @@ export default function Post({
                 avatar={
                     <Avatar alt={username} src="#" className={classes.avatar} />
                 }
-                action={<DeletePost handleDelete={handleDelete} />}
+                action={
+                    <DeletePost
+                        handleDelete={handleDelete}
+                        isAuthenticated={postedBy === user.email}
+                    />
+                }
                 title={username}
                 subheader={date}
             />
@@ -134,7 +140,7 @@ export default function Post({
                     </Typography>
                 </div>
                 <div className={classes.viewComment}>
-                    <CommentDialog postId={postId} />
+                    <CommentDialog postId={postId} user={user} />
                 </div>
                 <div className={classes.addComment}>
                     <AddComment postId={postId} user={user} />

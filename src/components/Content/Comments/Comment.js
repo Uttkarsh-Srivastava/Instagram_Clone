@@ -5,7 +5,6 @@ import { Card, CardHeader } from "@material-ui/core";
 import CardContent from "@material-ui/core/CardContent";
 import Avatar from "@material-ui/core/Avatar";
 import Typography from "@material-ui/core/Typography";
-
 import DeleteComment from "./DeleteComment";
 
 import { db } from "../../../firebase";
@@ -20,7 +19,7 @@ const useStyle = makeStyles((theme) => ({
         backgroundColor: "#3f51b5",
     },
 }));
-function Comment({ postId, commentId, text, username, date }) {
+function Comment({ postId, commentId, text, username, isAuthenticated, date }) {
     const classes = useStyle();
 
     const handleDelete = () => {
@@ -36,7 +35,12 @@ function Comment({ postId, commentId, text, username, date }) {
                 avatar={
                     <Avatar alt={username} src="#" className={classes.avatar} />
                 }
-                action={<DeleteComment handleDelete={handleDelete} />}
+                action={
+                    <DeleteComment
+                        handleDelete={handleDelete}
+                        isAuthenticated={isAuthenticated}
+                    />
+                }
                 title={username}
                 subheader={date}
             />

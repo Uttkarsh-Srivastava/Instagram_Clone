@@ -85,6 +85,7 @@ export default function InputUploadForm({ handleClose, user }) {
                                 caption: caption,
                                 imageUrl: url,
                                 username: user.displayName,
+                                postedBy: user.email,
                             });
                         });
 

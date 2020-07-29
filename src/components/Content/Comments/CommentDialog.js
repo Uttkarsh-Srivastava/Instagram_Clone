@@ -11,7 +11,7 @@ import { db } from "../../../firebase";
 import Comment from "./Comment";
 import moment from "moment";
 
-export default function CommentDialog({ postId }) {
+export default function CommentDialog({ postId, user }) {
     const [open, setOpen] = React.useState(false);
     const [scroll, setScroll] = React.useState("paper");
 
@@ -31,7 +31,7 @@ export default function CommentDialog({ postId }) {
             .collection("posts")
             .doc(postId)
             .collection("comments")
-            .orderBy("timestamp", "asc")
+            .orderBy("timestamp", "desc")
             .onSnapshot((snapshot) => {
                 setComments(
                     snapshot.docs.map((doc) => {
@@ -104,13 +104,16 @@ export default function CommentDialog({ postId }) {
                         ref={descriptionElementRef}
                         tabIndex={-1}
                     >
-                        {comments.forEach(({ id, comment, date }) => (
+                        {comments.map(({ id, comment, date }) => (
                             <Comment
                                 key={id}
                                 postId={postId}
                                 commentId={id}
                                 text={comment.text}
                                 username={comment.username}
+                                isAuthenticated={
+                                    comment.commentedBy === user.email
+                                }
                                 date={date}
                             />
                         ))}
